@@ -16,5 +16,6 @@ send_event = send_riemann_event
 
 @task
 def start(__cloudify_id, port=8080, **kwargs):
-  print 'HELLO BASH! %s' % port
+  with open('/tmp/HELLO', 'w') as f:
+    print >> f, 'HELLO BASH! %s' % port
   send_event(__cloudify_id, get_ip(), "hello_bash status", "state", "running")
