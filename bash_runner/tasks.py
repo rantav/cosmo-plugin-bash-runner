@@ -18,4 +18,4 @@ send_event = send_riemann_event
 def start(__cloudify_id, port=8080, **kwargs):
   with open('/home/ubuntu/hello', 'w') as f:
     print >> f, 'HELLO BASH! %s' % port
-  send_event(__cloudify_id, get_ip(), "hello_bash status", "state", "running")
+  send_event(__cloudify_id, get_ip(), "bash_runner status", "state", "running")
