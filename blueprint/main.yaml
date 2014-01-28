@@ -1,0 +1,70 @@
+#######
+# Cloudify Blueprint which runs a bash script
+
+imports:
+    - cloudify.types
+    - openstack_host_provisioner
+
+# The blueprint contains two nodes, a vm and a web server hosted in it.
+blueprint:
+    name: bash_runner
+    topology:
+        -   name: vm
+            type: openstack_host
+
+        -   name: bash_runner
+            type: bash_runner
+            properties:
+                port: 8080
+            relationships:
+                -   type: cloudify.relationships.contained_in
+                    target: vm
+
+#######
+# Types and implementation details.
+#
+plugins:
+    bash_runner:
+        derived_from: cloudify.plugins.agent_plugin
+        properties:
+            url: https://github.com/rantav/cosmo-plugin-bash-runner/archive/master.zip
+
+types:
+    openstack_host:
+        derived_from: cloudify.types.host
+        properties:
+            -   install_agent: true
+            -   worker_config:
+                    user: ubuntu
+                    port: 22
+                    key: ~/.ssh/cloudify-agents-kp.pem
+            -   nova_config:
+                    region: az-2.region-a.geo-1
+                    instance:
+                        name: bash_runner
+                        image: 67074
+                        flavor: 101
+                        key_name: cloudify-agents-kp
+        interfaces:
+            cloudify.interfaces.lifecycle:
+                -   create: cloudify.plugins.openstack_host_provisioner.tasks.provision
+                -   start: cloudify.plugins.openstack_host_provisioner.tasks.start
+        policies:
+            -   name: start_detection_policy
+                rules:
+                    -   type: state_equals
+                        properties:
+                            service: openstack machine status
+                            state: running
+    bash_runner:
+        derived_from: cloudify.types.web_server
+        interfaces:
+            cloudify.interfaces.lifecycle:
+                -   start: bash_runner.tasks.start
+        policies:
+            -   name: start_detection_policy
+                rules:
+                    -   type: state_equals
+                        properties:
+                            service: bash_runner status
+                            state: running
