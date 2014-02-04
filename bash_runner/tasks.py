@@ -20,26 +20,26 @@ send_event = send_riemann_event
 
 @operation
 def start(__cloudify_id, ctx, port=8080, **kwargs):
+  logger = ctx.logger
   # See in context.py
   # https://github.com/CloudifySource/cosmo-celery-common/blob/develop/cloudify/context.py
-  log(ctx.logger, 'ctx.node_id=%s' % ctx.node_id)
-  log(ctx.logger, 'ctx.blueprint_id=%s' % ctx.blueprint_id)
-  log(ctx.logger, 'ctx.deployment_id=%s' % ctx.deployment_id)
-  log(ctx.logger, 'ctx.execution_id=%s' % ctx.execution_id)
-  log(ctx.logger, 'ctx.properties=%s' % ctx.execution_id)
-  # log(ctx.logger, 'ctx.runtime_properties=%s' % ctx.runtime_properties)
-  log(ctx.logger, 'get_manager_ip()=%s' % get_manager_ip())
+  logger.info('ctx.node_id=%s' % ctx.node_id)
+  logger.info('ctx.blueprint_id=%s' % ctx.blueprint_id)
+  logger.info('ctx.deployment_id=%s' % ctx.deployment_id)
+  logger.info('ctx.execution_id=%s' % ctx.execution_id)
+  logger.info('ctx.properties=%s' % ctx.execution_id)
+  # loggger.info('ctx.runtime_properties=%s' % ctx.runtime_properties)
+  logger.info('get_manager_ip()=%s' % get_manager_ip())
 
   execute("echo HELLO WORLD", ctx.logger)
+
+  start_sh = download_blueprint_file(ctx, 'start.sh')
+  bash(start_sh, logger)
+
   set_node_started(ctx.node_id, get_ip())
-  # send_event(__cloudify_id, get_ip(), "bash_runner status", "state", "running")
 
-
-def run_script(script, logger):
-  'runs a bash script'
-  return execute('/bin/bash %s' % script, logger)
-
-
+def bash(path, logger):
+  return execute('/bin/bash %s' % path, logger)
 
 def execute(command, logger):
   logger.info('Running command: %s' % command)
@@ -106,17 +106,20 @@ class ProcessException(Exception):
     self.stderr = stderr
 
 
+def download_blueprint_file(ctx, blueprint_file):
+  ip = get_manager_ip()
+  port = 53229
+  # blueprint_id = ctx.blueprint_id
+  blueprint_id = '5fc21ca7-767f-47a1-8c22-8a91ff1dc02f'
+  url = 'http://%s:%d/blueprint-%s/%s' % (ip, port, blueprint_id, blueprint_file)
+  return download(url, ctx.logger)
+
 def download(http_file_path, logger):
   '''downloads a file to the local disk and returns it's disk path'''
   try:
     filename, header = urllib.urlretrieve(http_file_path)
-    log(logger, "Downloaded %s to %s" % (http_file_path, filename))
+    logger.info("Downloaded %s to %s" % (http_file_path, filename))
     return filename
   except IOError as e:
     logger.error("Error downloading file %s. %s" % (http_file_path, e))
     return None
-
-def log(logger, s):
-  with open('/home/ubuntu/hello', 'ab+') as f:
-    print >> f, s
-  logger.info(s) # /var/log/celery/celecy.log

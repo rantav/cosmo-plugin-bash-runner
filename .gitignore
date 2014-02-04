@@ -1,3 +1,4 @@
 build
 cosmo_plugin_bash_runner.egg-info
 dist
+*.pyc
