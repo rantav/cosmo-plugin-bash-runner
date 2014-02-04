@@ -22,13 +22,13 @@ send_event = send_riemann_event
 def start(__cloudify_id, ctx, port=8080, **kwargs):
   # See in context.py
   # https://github.com/CloudifySource/cosmo-celery-common/blob/develop/cloudify/context.py
-  log(ctx, 'ctx.node_id=%s' % ctx.node_id)
-  log(ctx, 'ctx.blueprint_id=%s' % ctx.blueprint_id)
-  log(ctx, 'ctx.deployment_id=%s' % ctx.deployment_id)
-  log(ctx, 'ctx.execution_id=%s' % ctx.execution_id)
-  log(ctx, 'ctx.properties=%s' % ctx.execution_id)
-  # log(ctx, 'ctx.runtime_properties=%s' % ctx.runtime_properties)
-  log(ctx, 'get_manager_ip()=%s' % get_manager_ip())
+  log(ctx.logger, 'ctx.node_id=%s' % ctx.node_id)
+  log(ctx.logger, 'ctx.blueprint_id=%s' % ctx.blueprint_id)
+  log(ctx.logger, 'ctx.deployment_id=%s' % ctx.deployment_id)
+  log(ctx.logger, 'ctx.execution_id=%s' % ctx.execution_id)
+  log(ctx.logger, 'ctx.properties=%s' % ctx.execution_id)
+  # log(ctx.logger, 'ctx.runtime_properties=%s' % ctx.runtime_properties)
+  log(ctx.logger, 'get_manager_ip()=%s' % get_manager_ip())
 
   execute("echo HELLO WORLD", ctx.logger)
   set_node_started(ctx.node_id, get_ip())
