@@ -110,7 +110,7 @@ def download(http_file_path, logger):
   '''downloads a file to the local disk and returns it's disk path'''
   try:
     filename, header = urllib.urlretrieve(http_file_path)
-    log(ctx, "Downloaded %s to %s" % (http_file_path, filename))
+    log(logger, "Downloaded %s to %s" % (http_file_path, filename))
     return filename
   except IOError as e:
     logger.error("Error downloading file %s. %s" % (http_file_path, e))
