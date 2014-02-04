@@ -42,7 +42,7 @@ def run_script(script, logger):
 
 
 def execute(command, logger):
-  logger.info('Running command: %s' + command)
+  logger.info('Running command: %s' % command)
   process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE,
                              stderr=subprocess.PIPE)
   make_async(process.stdout)
@@ -72,7 +72,7 @@ def execute(command, logger):
     if return_code is not None:
       break
 
-  logger.info('Done running command (return_code=%d): %s' + (return_code, command))
+  logger.info('Done running command (return_code=%d): %s' % (return_code, command))
   if (return_code == 0):
     return stdout
   else:
@@ -106,17 +106,17 @@ class ProcessException(Exception):
     self.stderr = stderr
 
 
-def download(http_file_path, ctx):
+def download(http_file_path, logger):
   '''downloads a file to the local disk and returns it's disk path'''
   try:
     filename, header = urllib.urlretrieve(http_file_path)
     log(ctx, "Downloaded %s to %s" % (http_file_path, filename))
     return filename
   except IOError as e:
-    ctx.logger.error("Error downloading file %s. %s" % (http_file_path, e))
+    logger.error("Error downloading file %s. %s" % (http_file_path, e))
     return None
 
-def log(ctx, s):
+def log(logger, s):
   with open('/home/ubuntu/hello', 'ab+') as f:
     print >> f, s
-  ctx.logger.info(s) # /var/log/celery/celecy.log
+  logger.info(s) # /var/log/celery/celecy.log
