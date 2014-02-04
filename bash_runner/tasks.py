@@ -29,6 +29,6 @@ def start(__cloudify_id, ctx, port=8080, **kwargs):
 
 
 def log(ctx, s):
-  with open('/home/ubuntu/hello', 'w') as f:
+  with open('/home/ubuntu/hello', 'ab+') as f:
     print >> f, s
   ctx.logger.info(s) # /var/log/celery...
