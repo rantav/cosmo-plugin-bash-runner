@@ -12,6 +12,8 @@ echo Installing tty.js
 sudo apt-get update
 sudo apt-get install git-core curl build-essential openssl libssl-dev -y
 cd /tmp/
+
+# Node
 git clone https://github.com/joyent/node.git
 pushd node
 git checkout v0.10.25
@@ -22,10 +24,15 @@ popd
 
 node -v
 
+# Npm
+git clone git://github.com/isaacs/npm.git
+pushd npm
+sudo make install
+popd
 
-curl https://www.npmjs.org/install.sh > npm_install.sh
-sudo sh npm_install.sh
+npm -v
 
+# tty.js
 sudo npm -g install tty.js
 
 tty.js --daemonize --port 8080
