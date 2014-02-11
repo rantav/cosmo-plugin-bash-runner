@@ -5,6 +5,8 @@ pwd
 
 env
 
+echo < /dev/tty
+
 echo Installing tty.js
 
 sudo apt-get update

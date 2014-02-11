@@ -35,6 +35,7 @@ def execute(command, ctx):
   env = setup_environment(ctx)
   process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE,
                              stderr=subprocess.PIPE,
+                             stdin=open('/dev/tty', 'r'),
                              env=env)
   make_async(process.stdout)
   make_async(process.stderr)
