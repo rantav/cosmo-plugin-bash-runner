@@ -106,15 +106,15 @@ def read_async(fd):
 def setup_environment(ctx):
   '''Add some useful environment variables to the environment'''
   env = os.environ.copy()
-  env['CLOUDIFY_NODE_ID'] = ctx.node_id
-  env['CLOUDIFY_BLUEPRINT_ID'] = ctx.blueprint_id
-  env['CLOUDIFY_DEPLOYMENT_ID'] = ctx.deployment_id
-  env['CLOUDIFY_MANAGER_IP'] = get_manager_ip()
-  env['CLOUDIFY_EXECUTION_ID'] = ctx.execution_id
+  env['CLOUDIFY_NODE_ID'] = ctx.node_id.encode('utf-8')
+  env['CLOUDIFY_BLUEPRINT_ID'] = ctx.blueprint_id.encode('utf-8')
+  env['CLOUDIFY_DEPLOYMENT_ID'] = ctx.deployment_id.encode('utf-8')
+  env['CLOUDIFY_MANAGER_IP'] = get_manager_ip().encode('utf-8')
+  env['CLOUDIFY_EXECUTION_ID'] = ctx.execution_id.encode('utf-8')
   for k, v in ctx.properties.iteritems():
-    env['CLOUDIFY_PROPERTY_%s' % k] = v
+    env['CLOUDIFY_PROPERTY_%s' % k] = v.encode('utf-8')
   # for k, v in ctx.runtime_properties.iteritems():
-  #   env['CLOUDIFY_RUNTIME_PROPERTY_%s' % k] = v
+  #   env['CLOUDIFY_RUNTIME_PROPERTY_%s' % k] = v.encode('utf-8')
   return env
 
 
