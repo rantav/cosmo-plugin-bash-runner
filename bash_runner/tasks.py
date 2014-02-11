@@ -16,13 +16,6 @@ from cloudify.manager import set_node_started
 
 get_ip = get_local_ip
 
-
-@operation
-def install(ctx, **kwargs):
-  install_sh = download_blueprint_file('install.sh', ctx)
-  bash(install_sh, ctx)
-
-
 @operation
 def start(ctx, **kwargs):
   start_sh = download_blueprint_file('start.sh', ctx)
