@@ -1,11 +1,15 @@
 set -e
 set -x
+
+pwd
+
 env
 
 echo Installing tty.js
 
 sudo apt-get update
 sudo apt-get install git-core curl build-essential openssl libssl-dev -y
+cd /tmp/
 git clone https://github.com/joyent/node.git
 pushd node
 git checkout v0.10.25
