@@ -22,13 +22,13 @@ def start(ctx, port=8080, **kwargs):
   logger = ctx.logger
   # See in context.py
   # https://github.com/CloudifySource/cosmo-celery-common/blob/develop/cloudify/context.py
-  # logger.info('ctx.node_id=%s' % ctx.node_id)
-  # logger.info('ctx.blueprint_id=%s' % ctx.blueprint_id)
-  # logger.info('ctx.deployment_id=%s' % ctx.deployment_id)
-  # logger.info('ctx.execution_id=%s' % ctx.execution_id)
-  # logger.info('ctx.properties=%s' % ctx.properties)
-  # logger.info('ctx.runtime_properties=%s' % ctx.runtime_properties)
-  # logger.info('get_manager_ip()=%s' % get_manager_ip())
+  logger.info('ctx.node_id=%s' % ctx.node_id)
+  logger.info('ctx.blueprint_id=%s' % ctx.blueprint_id)
+  logger.info('ctx.deployment_id=%s' % ctx.deployment_id)
+  logger.info('ctx.execution_id=%s' % ctx.execution_id)
+  logger.info('ctx.properties=%s' % ctx.properties)
+  logger.info('ctx.runtime_properties=%s' % ctx.runtime_properties)
+  logger.info('get_manager_ip()=%s' % get_manager_ip())
 
   execute('env', ctx)
 
