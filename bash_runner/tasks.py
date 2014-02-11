@@ -10,17 +10,15 @@ import fcntl
 import select
 import os
 import errno
-from cosmo.events import send_event as send_riemann_event
 from cloudify.utils import get_local_ip, get_manager_ip
 from cloudify.decorators import operation
 from cloudify.manager import set_node_started
 
 get_ip = get_local_ip
-send_event = send_riemann_event
 
 
 @operation
-def start(__cloudify_id, ctx, port=8080, **kwargs):
+def start(ctx, port=8080, **kwargs):
   logger = ctx.logger
   # See in context.py
   # https://github.com/CloudifySource/cosmo-celery-common/blob/develop/cloudify/context.py
@@ -29,7 +27,7 @@ def start(__cloudify_id, ctx, port=8080, **kwargs):
   logger.info('ctx.deployment_id=%s' % ctx.deployment_id)
   logger.info('ctx.execution_id=%s' % ctx.execution_id)
   logger.info('ctx.properties=%s' % ctx.properties)
-  # loggger.info('ctx.runtime_properties=%s' % ctx.runtime_properties)
+  logger.info('ctx.runtime_properties=%s' % ctx.runtime_properties)
   logger.info('get_manager_ip()=%s' % get_manager_ip())
 
   execute('env', ctx)
@@ -112,6 +110,8 @@ def setup_environment(ctx):
   env['CLOUDIFY_EXECUTION_ID'] = ctx.execution_id
   for k, v in ctx.properties.iteritems():
     env['CLOUDIFY_PROPERTY_%s' % k] = v
+  for k, v in ctx.runtime_properties.iteritems():
+    env['CLOUDIFY_RUNTIME_PROPERTY_%s' % k] = v
   return env
 
 
