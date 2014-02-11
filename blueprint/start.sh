@@ -1,8 +1,6 @@
 set -e
 set -x
 
-pwd
-
 env
 
 echo < /dev/tty
