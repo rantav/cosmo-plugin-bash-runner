@@ -22,13 +22,13 @@ def start(ctx, port=8080, **kwargs):
   logger = ctx.logger
   # See in context.py
   # https://github.com/CloudifySource/cosmo-celery-common/blob/develop/cloudify/context.py
-  logger.info('ctx.node_id=%s' % ctx.node_id)
-  logger.info('ctx.blueprint_id=%s' % ctx.blueprint_id)
-  logger.info('ctx.deployment_id=%s' % ctx.deployment_id)
-  logger.info('ctx.execution_id=%s' % ctx.execution_id)
-  logger.info('ctx.properties=%s' % ctx.properties)
-  logger.info('ctx.runtime_properties=%s' % ctx.runtime_properties)
-  logger.info('get_manager_ip()=%s' % get_manager_ip())
+  # logger.info('ctx.node_id=%s' % ctx.node_id)
+  # logger.info('ctx.blueprint_id=%s' % ctx.blueprint_id)
+  # logger.info('ctx.deployment_id=%s' % ctx.deployment_id)
+  # logger.info('ctx.execution_id=%s' % ctx.execution_id)
+  # logger.info('ctx.properties=%s' % ctx.properties)
+  # logger.info('ctx.runtime_properties=%s' % ctx.runtime_properties)
+  # logger.info('get_manager_ip()=%s' % get_manager_ip())
 
   execute('env', ctx)
 
@@ -102,6 +102,8 @@ def read_async(fd):
 
 def setup_environment(ctx):
   '''Add some useful environment variables to the environment'''
+  return {}
+  ####
   env = os.environ.copy()
   env['CLOUDIFY_NODE_ID'] = ctx.node_id
   env['CLOUDIFY_BLUEPRINT_ID'] = ctx.blueprint_id
@@ -128,7 +130,7 @@ def download_blueprint_file(blueprint_file, ctx):
   ip = get_manager_ip()
   port = 53229
   # blueprint_id = ctx.blueprint_id
-  blueprint_id = '5fc21ca7-767f-47a1-8c22-8a91ff1dc02f'
+  blueprint_id = 'bash_runner_v1'
   url = 'http://%s:%d/blueprint-%s/%s' % (ip, port, blueprint_id, blueprint_file)
   return download(url, ctx.logger)
 
