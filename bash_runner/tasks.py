@@ -131,10 +131,12 @@ class ProcessException(Exception):
 
 def download_blueprint_file(blueprint_file, ctx):
   ip = get_manager_ip()
+  # HACK:
   port = 53229
   # blueprint_id = ctx.blueprint_id
-  blueprint_id = 'cc7ea1c4-9896-4a07-a779-6454545c6791/'
-  url = 'http://%s:%d/blueprint-%s/%s' % (ip, port, blueprint_id, blueprint_file)
+  # HACK:
+  blueprint_id = 'bash_runner_v3'
+  url = 'http://%s:%d/%s/%s' % (ip, port, blueprint_id, blueprint_file)
   return download(url, ctx.logger)
 
 
