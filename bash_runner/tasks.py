@@ -133,9 +133,7 @@ def download_blueprint_file(blueprint_file, ctx):
   ip = get_manager_ip()
   # HACK:
   port = 53229
-  # blueprint_id = ctx.blueprint_id
-  # HACK:
-  blueprint_id = 'bash_runner_v3'
+  blueprint_id = ctx.blueprint_id
   url = 'http://%s:%d/%s/%s' % (ip, port, blueprint_id, blueprint_file)
   return download(url, ctx.logger)
 
