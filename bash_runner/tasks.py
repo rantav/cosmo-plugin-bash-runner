@@ -108,7 +108,7 @@ def setup_environment(ctx):
   env['CLOUDIFY_NODE_ID'] = ctx.node_id
   env['CLOUDIFY_BLUEPRINT_ID'] = ctx.blueprint_id
   env['CLOUDIFY_DEPLOYMENT_ID'] = ctx.deployment_id
-  env['CLOUDIFY_manager_ip'] = get_manager_ip()
+  env['CLOUDIFY_MANAGER_IP'] = get_manager_ip()
   env['CLOUDIFY_EXECUTION_ID'] = ctx.execution_id
   for k, v in ctx.properties.iteritems():
     env['CLOUDIFY_PROPERTY_%s' % k] = v
