@@ -7,15 +7,13 @@ imports:
 
 # The blueprint contains two nodes, a vm and a web server hosted in it.
 blueprint:
-    name: bash_runner_v10
+    name: bash_runner
     topology:
         -   name: vm
             type: openstack_host
 
         -   name: bash_runner
             type: bash_runner
-            properties:
-                port: 8080
             relationships:
                 -   type: cloudify.relationships.contained_in
                     target: vm
