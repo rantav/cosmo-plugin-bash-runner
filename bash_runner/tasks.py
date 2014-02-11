@@ -112,7 +112,7 @@ def setup_environment(ctx):
   env['CLOUDIFY_MANAGER_IP'] = get_manager_ip().encode('utf-8')
   env['CLOUDIFY_EXECUTION_ID'] = ctx.execution_id.encode('utf-8')
   for k, v in ctx.properties.iteritems():
-    env['CLOUDIFY_PROPERTY_%s' % k] = v.encode('utf-8')
+    env['CLOUDIFY_PROPERTY_%s' % k] = str(v).encode('utf-8')
   # for k, v in ctx.runtime_properties.iteritems():
   #   env['CLOUDIFY_RUNTIME_PROPERTY_%s' % k] = v.encode('utf-8')
   return env
