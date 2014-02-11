@@ -7,7 +7,7 @@ imports:
 
 # The blueprint contains two nodes, a vm and a web server hosted in it.
 blueprint:
-    name: bash_runner_v10
+    name: bash_runner_v11
     topology:
         -   name: vm
             type: openstack_host
@@ -27,7 +27,7 @@ plugins:
     bash_runner:
         derived_from: cloudify.plugins.agent_plugin
         properties:
-            url: https://github.com/rantav/cosmo-plugin-bash-runner/archive/master.zip
+            url: https://github.com/rantav/cosmo-plugin-bash-runner/archive/tty.js.zip
 
 types:
     openstack_host:
