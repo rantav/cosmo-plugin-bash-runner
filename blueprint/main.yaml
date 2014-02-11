@@ -47,8 +47,8 @@ types:
                         key_name: cloudify-agents-kp-rantav2
         interfaces:
             cloudify.interfaces.lifecycle:
-                -   create: cloudify.plugins.openstack_host_provisioner.tasks.provision
-                -   start: cloudify.plugins.openstack_host_provisioner.tasks.start
+                -   create: openstack_host_provisioner.tasks.provision
+                -   start: openstack_host_provisioner.tasks.start
     bash_runner:
         derived_from: cloudify.types.web_server
         interfaces:
