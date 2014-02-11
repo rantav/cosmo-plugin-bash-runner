@@ -39,6 +39,9 @@ def start(ctx, port=8080, **kwargs):
 
 
 def bash(path, ctx):
+  with open (path, "r") as myfile:
+    cat = myfile.read()
+  ctx.logger.info('Executin this file: %s with content: \n%s' % (path, cat))
   return execute('/bin/bash %s' % path, ctx)
 
 
