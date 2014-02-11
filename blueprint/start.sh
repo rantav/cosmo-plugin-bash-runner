@@ -1,1 +1,3 @@
 echo START START START
+env
+
