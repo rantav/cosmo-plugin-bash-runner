@@ -27,7 +27,7 @@ def start(ctx, port=8080, **kwargs):
   logger.info('ctx.deployment_id=%s' % ctx.deployment_id)
   logger.info('ctx.execution_id=%s' % ctx.execution_id)
   logger.info('ctx.properties=%s' % ctx.properties)
-  logger.info('ctx.runtime_properties=%s' % ctx.runtime_properties)
+  # logger.info('ctx.runtime_properties=%s' % ctx.runtime_properties)
   logger.info('get_manager_ip()=%s' % get_manager_ip())
 
   execute('env', ctx)
@@ -105,8 +105,6 @@ def read_async(fd):
 
 def setup_environment(ctx):
   '''Add some useful environment variables to the environment'''
-  return {}
-  ####
   env = os.environ.copy()
   env['CLOUDIFY_NODE_ID'] = ctx.node_id
   env['CLOUDIFY_BLUEPRINT_ID'] = ctx.blueprint_id
@@ -115,8 +113,8 @@ def setup_environment(ctx):
   env['CLOUDIFY_EXECUTION_ID'] = ctx.execution_id
   for k, v in ctx.properties.iteritems():
     env['CLOUDIFY_PROPERTY_%s' % k] = v
-  for k, v in ctx.runtime_properties.iteritems():
-    env['CLOUDIFY_RUNTIME_PROPERTY_%s' % k] = v
+  # for k, v in ctx.runtime_properties.iteritems():
+  #   env['CLOUDIFY_RUNTIME_PROPERTY_%s' % k] = v
   return env
 
 
