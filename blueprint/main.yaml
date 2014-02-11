@@ -7,7 +7,7 @@ imports:
 
 # The blueprint contains two nodes, a vm and a web server hosted in it.
 blueprint:
-    name: bash_runner
+    name: bash_runner_v9
     topology:
         -   name: vm
             type: openstack_host
@@ -53,4 +53,5 @@ types:
         derived_from: cloudify.types.web_server
         interfaces:
             cloudify.interfaces.lifecycle:
+                -   install: bash_runner.tasks.install
                 -   start: bash_runner.tasks.start

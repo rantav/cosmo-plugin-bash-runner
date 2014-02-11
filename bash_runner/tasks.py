@@ -18,28 +18,20 @@ get_ip = get_local_ip
 
 
 @operation
-def start(ctx, port=8080, **kwargs):
-  logger = ctx.logger
-  # See in context.py
-  # https://github.com/CloudifySource/cosmo-celery-common/blob/develop/cloudify/context.py
-  logger.info('ctx.node_id=%s' % ctx.node_id)
-  logger.info('ctx.blueprint_id=%s' % ctx.blueprint_id)
-  logger.info('ctx.deployment_id=%s' % ctx.deployment_id)
-  logger.info('ctx.execution_id=%s' % ctx.execution_id)
-  logger.info('ctx.properties=%s' % ctx.properties)
-  # logger.info('ctx.runtime_properties=%s' % ctx.runtime_properties)
-  logger.info('get_manager_ip()=%s' % get_manager_ip())
+def install(ctx, **kwargs):
+  install_sh = download_blueprint_file('install.sh', ctx)
+  bash(install_sh, ctx)
 
-  execute('env', ctx)
 
+@operation
+def start(ctx, **kwargs):
   start_sh = download_blueprint_file('start.sh', ctx)
   bash(start_sh, ctx)
-
   set_node_started(ctx.node_id, get_ip())
 
 
 def bash(path, ctx):
-  with open (path, "r") as myfile:
+  with open(path, "r") as myfile:
     cat = myfile.read()
   ctx.logger.info('Executing this file: %s with content: \n%s' % (path, cat))
   return execute('/bin/bash %s' % path, ctx)
@@ -78,7 +70,8 @@ def execute(command, ctx):
     if return_code is not None:
       break
 
-  ctx.logger.info('Done running command (return_code=%d): %s' % (return_code, command))
+  ctx.logger.info('Done running command (return_code=%d): %s'
+                  % (return_code, command))
   if (return_code == 0):
     return stdout
   else:
@@ -106,6 +99,8 @@ def read_async(fd):
 def setup_environment(ctx):
   '''Add some useful environment variables to the environment'''
   env = os.environ.copy()
+  # See in context.py
+  # https://github.com/CloudifySource/cosmo-celery-common/blob/develop/cloudify/context.py
   env['CLOUDIFY_NODE_ID'] = ctx.node_id.encode('utf-8')
   env['CLOUDIFY_BLUEPRINT_ID'] = ctx.blueprint_id.encode('utf-8')
   env['CLOUDIFY_DEPLOYMENT_ID'] = ctx.deployment_id.encode('utf-8')
