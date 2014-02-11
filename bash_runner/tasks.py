@@ -41,7 +41,7 @@ def start(ctx, port=8080, **kwargs):
 def bash(path, ctx):
   with open (path, "r") as myfile:
     cat = myfile.read()
-  ctx.logger.info('Executin this file: %s with content: \n%s' % (path, cat))
+  ctx.logger.info('Executing this file: %s with content: \n%s' % (path, cat))
   return execute('/bin/bash %s' % path, ctx)
 
 
@@ -133,7 +133,7 @@ def download_blueprint_file(blueprint_file, ctx):
   ip = get_manager_ip()
   port = 53229
   # blueprint_id = ctx.blueprint_id
-  blueprint_id = 'bash_runner_v1'
+  blueprint_id = 'cc7ea1c4-9896-4a07-a779-6454545c6791/'
   url = 'http://%s:%d/blueprint-%s/%s' % (ip, port, blueprint_id, blueprint_file)
   return download(url, ctx.logger)
 
