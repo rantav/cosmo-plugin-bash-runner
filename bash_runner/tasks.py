@@ -10,17 +10,15 @@ import fcntl
 import select
 import os
 import errno
-from cloudify.utils import get_local_ip, get_manager_ip
+from cloudify.utils import get_manager_ip
 from cloudify.decorators import operation
-from cloudify.manager import set_node_started
 
-get_ip = get_local_ip
 
 @operation
 def start(ctx, **kwargs):
   start_sh = download_blueprint_file('start.sh', ctx)
   bash(start_sh, ctx)
-  set_node_started(ctx.node_id, get_ip())
+  ctx.set_started()
 
 
 def bash(path, ctx):
