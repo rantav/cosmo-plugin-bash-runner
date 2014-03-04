@@ -15,7 +15,7 @@ from cloudify.decorators import operation
 
 
 @operation
-def run(ctx, scripts=[]):
+def run(ctx, scripts=[], **kwargs):
   for s in scripts:
     sh = download_blueprint_file(s, ctx)
     bash(sh, ctx)
