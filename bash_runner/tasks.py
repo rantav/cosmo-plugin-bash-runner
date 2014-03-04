@@ -2,7 +2,7 @@
 Cloudify plugin for running a simple bash script.
 
 Operations:
-    start: Run a script
+    run: Run a list of scripts provided by the param scripts
 """
 import urllib
 import subprocess
@@ -15,10 +15,10 @@ from cloudify.decorators import operation
 
 
 @operation
-def start(ctx, **kwargs):
-  start_sh = download_blueprint_file('start.sh', ctx)
-  bash(start_sh, ctx)
-  ctx.set_started()
+def run(ctx, scripts=[]):
+  for s in scripts:
+    sh = download_blueprint_file(s, ctx)
+    bash(sh, ctx)
 
 
 def bash(path, ctx):
