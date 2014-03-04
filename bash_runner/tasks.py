@@ -15,13 +15,14 @@ from cloudify.decorators import operation
 
 
 @operation
-def run(ctx, scripts=[], **kwargs):
-  ctx.logger.info('scripts = %s ' % scripts)
-  ctx.logger.info('kwargs: %s ' % kwargs)
-  for s in scripts:
-    sh = download_blueprint_file(s, ctx)
-    bash(sh, ctx)
-  ctx.set_started()
+def run(ctx, **kwargs):
+  if 'scripts' in ctx.properties:
+    scripts = ctx.properties['scripts']
+    for s in scripts:
+      sh = download_blueprint_file(s, ctx)
+      bash(sh, ctx)
+  else:
+    ctx.logger.warn('No scripts to run')
 
 
 def bash(path, ctx):
